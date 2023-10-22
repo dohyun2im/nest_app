@@ -28,7 +28,7 @@ export class CommentEntity extends CommonPKEntity {
   @ApiProperty({
     example: 'userId',
     description: 'userId',
-    required: false,
+    required: true,
   })
   @IsInt()
   @Column('bigint', { unique: false, nullable: false })
@@ -37,7 +37,7 @@ export class CommentEntity extends CommonPKEntity {
   @ApiProperty({
     example: 'articleId',
     description: 'articleId',
-    required: false,
+    required: true,
   })
   @IsInt()
   @Column('bigint', { unique: false, nullable: false })

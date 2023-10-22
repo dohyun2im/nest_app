@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  ParseIntPipe,
   Post,
   Put,
   UseGuards,
@@ -49,7 +50,7 @@ export class ArticleController {
     description: '게시글을 조회한다.',
   })
   @Get('/:id')
-  async readArticle(@Param('id') id) {
+  async readArticle(@Param('id', ParseIntPipe) id) {
     const articleId = id;
 
     const article = await this.articleService.getArticle(articleId);
@@ -64,7 +65,11 @@ export class ArticleController {
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Put('/:id')
-  async updateArticle(@Param('id') id, @User() user, @Body() body) {
+  async updateArticle(
+    @Param('id', ParseIntPipe) id,
+    @User() user,
+    @Body() body,
+  ) {
     const userId = user.id;
     const articleId = id;
 
@@ -88,7 +93,7 @@ export class ArticleController {
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Delete('/:id')
-  async deleteArticle(@Param('id') id, @User() user) {
+  async deleteArticle(@Param('id', ParseIntPipe) id, @User() user) {
     const userId = user.id;
     const articleId = id;
 
