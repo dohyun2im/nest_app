@@ -1,4 +1,11 @@
-## Using brew
+## todo list
+
+```
+1. use prisma
+2. create nestia sdk
+```
+
+## Using mysql
 
 ```
 # install mysql

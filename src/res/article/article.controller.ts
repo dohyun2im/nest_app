@@ -44,6 +44,10 @@ export class ArticleController {
     return article;
   }
 
+  @ApiOperation({
+    summary: '게시글 조회 API',
+    description: '게시글을 조회한다.',
+  })
   @Get('/:id')
   async readArticle(@Param('id') id) {
     const articleId = id;
@@ -53,6 +57,11 @@ export class ArticleController {
     return article;
   }
 
+  @ApiOperation({
+    summary: '게시글 수정 API',
+    description: '유저가 게시글을 수정한다.',
+  })
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Put('/:id')
   async updateArticle(@Param('id') id, @User() user, @Body() body) {
@@ -72,6 +81,11 @@ export class ArticleController {
     return res;
   }
 
+  @ApiOperation({
+    summary: '게시글 삭제 API',
+    description: '유저가 게시글을 삭제한다.',
+  })
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Delete('/:id')
   async deleteArticle(@Param('id') id, @User() user) {

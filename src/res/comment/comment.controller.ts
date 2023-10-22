@@ -10,11 +10,21 @@ import {
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { User } from 'src/decorators/user.decorator';
 import { CommentService } from './comment.service';
+import { ApiBearerAuth, ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { CreateCommentDto } from 'src/dtos/comment/create-comment-dto';
 
+@ApiTags('댓글 API')
 @Controller('comment')
 export class CommentController {
   constructor(private readonly commentService: CommentService) {}
-
+  @ApiOperation({
+    summary: '댓글 작성 API',
+    description: '유저가 댓글을 작성한다.',
+  })
+  @ApiBody({
+    type: CreateCommentDto,
+  })
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Post()
   async createComment(@Body() body, @User() user) {
@@ -32,8 +42,12 @@ export class CommentController {
 
     return comment;
   }
-
+  @ApiOperation({
+    summary: '댓글 수정 API',
+    description: '유저가 댓글을 수정한다.',
+  })
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @Put('/:id')
   async updateComment(@Body() body, @User() user, @Param('id') id) {
     const content = body.content;
@@ -48,7 +62,11 @@ export class CommentController {
 
     return res;
   }
-
+  @ApiOperation({
+    summary: '댓글 삭제 API',
+    description: '유저가 댓글을 삭제한다.',
+  })
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Delete('/:id')
   async deleteComment(@Param('id') id, @User() user) {
